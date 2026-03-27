@@ -1,0 +1,20 @@
+name: Discord朝レポート送信
+
+on:
+  push:
+    paths:
+      - 'reports/latest.md'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Send to Discord
+        run: |
+          CONTENT=$(cat reports/latest.md | head -c 1900)
+          jq -n --arg content "$CONTENT" '{"content": $content}' | \
+            curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" \
+              -H "Content-Type: application/json" \
+              -d @-

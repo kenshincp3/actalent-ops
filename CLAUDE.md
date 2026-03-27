@@ -8,23 +8,14 @@
 
 1. このリポジトリの `data/kpis.md` と `data/taskboard.md` を読む
 2. 下記フォーマットで朝レポートを生成する
-3. WebFetch で Discord Webhook に POST して送信する
+3. 生成したレポートを `reports/latest.md` に書き込む
+4. git add → git commit → git push する（GitHub Actionsが自動でDiscordに送信する）
 
-### Discord送信方法
+### 重要
 
-WebFetch を使って以下のように送信する：
-
-```
-POST https://discord.com/api/webhooks/1487034787318202418/bPcFtKb0C1rd8NZ1U-ZTMhSTwNpFvQ1Suw9IYf1Y9exrn84EeSNmYoZ4zCYX9wcEhNuI
-Content-Type: application/json
-
-{
-  "content": "（ここに朝レポートの本文を入れる）"
-}
-```
-
-- Discordは2000文字制限があるので、レポートは2000文字以内に収める
-- 改行は `\n` で入れる
+- `reports/latest.md` に書き込むこと。このファイルへのpushをGitHub Actionsが検知してDiscordに転送する
+- レポートは2000文字以内に収める（Discord制限）
+- commitメッセージは `morning-report: YYYY-MM-DD` の形式にする
 
 ## 朝レポートフォーマット
 
